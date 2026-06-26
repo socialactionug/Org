@@ -1,1 +1,54 @@
+backend:
+  name: github
+  repo: yourusername/repo-name
+  branch: main
 
+media_folder: assets/images/uploads
+public_folder: /assets/images/uploads
+
+collections:
+    - name: "pages"
+    label: "Pages"
+    files:
+            - file: "index.html"
+        name: "home"
+        label: "Homepage"
+        fields:
+                    - {label: "Hero Photo", name: "hero_image", widget: "image"}
+                    - {label: "Hero Title", name: "hero_title", widget: "string"}
+                    - {label: "Hero Text", name: "hero_text", widget: "text"}
+                    - {label: "Add Photos Anywhere", name: "photos", widget: "list", label_field: "caption", fields: [
+              {label: "Photo", name: "image", widget: "image"},
+              {label: "Caption/Alt text", name: "caption", widget: "string", required: false}
+            ]}
+      
+            - file: "about.html"
+        name: "about"
+        label: "About Page"
+        fields:
+                    - {label: "About Title", name: "title", widget: "string"}
+                    - {label: "About Content", name: "body", widget: "markdown"}
+                    - {label: "Add Photos Anywhere", name: "photos", widget: "list", label_field: "caption", fields: [
+              {label: "Photo", name: "image", widget: "image"},
+              {label: "Caption/Alt text", name: "caption", widget: "string", required: false}
+            ]}
+      
+            - file: "programs.html"
+        name: "programs"
+        label: "Programs Page"
+        fields:
+                    - {label: "Programs Title", name: "title", widget: "string"}
+                    - {label: "Add Photos Anywhere", name: "photos", widget: "list", label_field: "caption", fields: [
+              {label: "Photo", name: "image", widget: "image"},
+              {label: "Caption/Alt text", name: "caption", widget: "string", required: false}
+            ]}
+      
+            - file: "contact.html"
+        name: "contact"
+        label: "Contact Page"
+        fields:
+                    - {label: "Contact Title", name: "title", widget: "string"}
+                    - {label: "Add Photos Anywhere", name: "photos", widget: "list", label_field: "caption", fields: [
+              {label: "Photo", name: "image", widget: "image"},
+              {label: "Caption/Alt text", name: "caption", widget: "string", required: false}
+            ]}
