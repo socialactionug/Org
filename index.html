@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Action Uganda | Child Protection & Community Support</title>
+  <meta name="description" content="Social Action Uganda supports vulnerable communities in Wakiso District through child protection, human rights advocacy, and emergency relief since 2024. Registration: WCBO/24/4122">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">Social Action Uganda</a>
+    
+    <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-nav">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
 
+    <nav id="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="donate.html" class="btn-donate">Donate</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="assets/images/events/hero-banner.jpg" alt="Social Action Uganda community campaign" loading="lazy">
+      <h1>Child protection, human rights, and community support in Wakiso District</h1>
+      <p>Registered CBO since 2024. Reg No: WCBO/24/4122</p>
+      <div class="cta-group">
+        <a href="https://buy.stripe.com/8x214o2awd8l8ym7PhfjG00?client_reference_id=child-marriage" class="btn btn-primary">Donate to End Child Marriage</a>
+        <a href="https://buy.stripe.com/8x214o2awd8l8ym7PhfjG00?client_reference_id=emergency" class="btn btn-secondary">Donate for Emergency Relief</a>
+        <a href="contact.html#volunteer" class="btn btn-outline">Volunteer</a>
+      </div>
+    </section>
+
+    <section class="latest">
+      <h2>Latest Impact</h2>
+      <p><strong>May 2026:</strong> Emergency Relief Support for 200+ families in Wakiso District</p>
+      <p><strong>April 2026:</strong> Child Marriage Awareness Campaign reached 500+ students</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contact-icons">
+      <img src="assets/icons/phone.svg" alt="Phone" width="18"> 
+      <a href="tel:+25678020041">+256 780 20041</a>
+    </div>
+    <p>Follow Us</p>
+    <div class="social-icons">
+      <a href="https://x.com/SOCIALACT8" aria-label="X Twitter"><img src="assets/icons/x-twitter.svg" width="24" height="24" alt="X"></a>
+      <a href="https://www.linkedin.com/in/social-action-717517335" aria-label="LinkedIn"><img src="assets/icons/linkedin.svg" width="24" height="24" alt="LinkedIn"></a>
+      <a href="https://www.facebook.com/share/1Er9Ram4Gt/" aria-label="Facebook"><img src="assets/icons/facebook.svg" width="24" height="24" alt="Facebook"></a>
+    </div>
+    <p>© 2026 Social Action Uganda. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; line-height: 1.6; color: #222; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #fff; border-bottom: 2px solid #2e7d32; position: sticky; top: 0; z-index: 100; }
+.logo { font-weight: 700; font-size: 1.2rem; color: #2e7d32; text-decoration: none; }
+nav ul { display: flex; gap: 1.5rem; list-style: none; }
+nav a { text-decoration: none; color: #333; font-weight: 500; }
+.btn-donate { background: #d32f2f; color: #fff !important; padding: 0.4rem 0.8rem; border-radius: 4px; }
+.menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  nav { position: fixed; top: 60px; left: -100%; width: 100%; background: #fff; transition: left 0.3s; border-top: 1px solid #ddd; height: calc(100vh - 60px); }
+  nav.menu-open { left: 0; }
+  nav ul { flex-direction: column; padding: 1rem; gap: 1rem; }
+}
+.hero { text-align: center; padding: 3rem 1rem; }
+.hero img { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem; }
+.cta-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+.btn { padding: 0.8rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; }
+.btn-primary { background: #2e7d32; color: #fff; }
+.btn-secondary { background: #1976d2; color: #fff; }
+.btn-outline { border: 2px solid #2e7d32; color: #2e7d32; }
+.latest { padding: 2rem 1rem; max-width: 800px; margin: 0 auto; }
+footer { background: #f5f5f5; padding: 2rem 1rem; text-align: center; margin-top: 3rem; }
+.social-icons { display: flex; gap: 1rem; justify-content: center; margin: 1rem 0; }
+.contact-icons { display: flex; gap: 0.5rem; justify-content: center; align-items: center; margin-bottom: 1rem; }
+
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.getElementById('main-nav');
+
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('menu-open');
+  const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+  menuToggle.setAttribute('aria-expanded', !expanded);
+});
+
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
