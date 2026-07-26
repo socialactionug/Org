@@ -1,1 +1,1922 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Action Uganda – Child Protection &amp; Community Support</title>
+  <meta name="description" content="Social Action Uganda works with communities in Wakiso District to prevent child marriage, protect vulnerable children, promote human rights, and support vulnerable people."/>
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="Social Action Uganda – Supporting Vulnerable Communities"/>
+  <meta property="og:description" content="We work with communities in Wakiso District to prevent child marriage, protect children, promote human rights, and support vulnerable families."/>
+  <meta property="og:url" content="https://social-action-uganda.web.app"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Social Action Uganda"/>
+  <meta property="og:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/online/pre-site/9buu3s.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Social Action Uganda – Supporting Vulnerable Communities"/>
+  <meta name="twitter:description" content="Supporting vulnerable communities in Wakiso District through child protection, human rights, and charity."/>
+  <meta name="twitter:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/online/pre-site/9buu3s.jpg"/>
+  <meta name="twitter:url" content="https://social-action-uganda.web.app"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+          colors: {
+            green: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d',950:'#052e16' },
+            forest: { 700:'#1a5c38', 800:'#144d2f', 900:'#0d3d24' },
+            gold: { 400:'#fbbf24', 500:'#f59e0b', 600:'#d97706' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Slideshow */
+    .slideshow-container { position: relative; overflow: hidden; }
+    .slide { display: none; animation: fadeSlide 0.8s ease-in-out; }
+    .slide.active { display: block; }
+    @keyframes fadeSlide { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+    .slide-dots { display: flex; justify-content: center; gap: 6px; padding: 8px 0; }
+    .slide-dot { width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; cursor: pointer; transition: background .3s; }
+    .slide-dot.active { background: #15803d; }
+    
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    
+    /* Admin panel */
+    #adminPanel { display: none; }
+    #adminPanel.open { display: flex; }
+    
+    /* Upload zone */
+    .upload-zone { border: 2px dashed #86efac; background: #f0fdf4; transition: all .3s; }
+    .upload-zone:hover { border-color: #15803d; background: #dcfce7; }
+    
+    /* Impact counter */
+    .counter-num { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; }
+
+    /* Hero gradient overlay */
+    .hero-overlay { background: linear-gradient(135deg, rgba(20,77,47,0.92) 0%, rgba(21,128,61,0.75) 100%); }
+    
+    /* Section separator */
+    .wave-sep { overflow: hidden; line-height: 0; }
+    
+    /* Admin toast */
+    #adminToast { transition: opacity .4s, transform .4s; }
+
+    /* Photo grid */
+    .photo-grid { display: grid; gap: 8px; }
+    .photo-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .photo-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    /* Mobile nav */
+    #mobileMenu { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    #mobileMenu.open { max-height: 400px; }
+
+    /* Donation card hover */
+    .donate-card { transition: transform .3s, box-shadow .3s; }
+    .donate-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+
+    /* Admin tab active */
+    .admin-tab.active { background: #15803d; color: white; }
+
+    /* Loading spinner */
+    .spinner { border: 3px solid #f0fdf4; border-top: 3px solid #15803d; border-radius: 50%; width: 28px; height: 28px; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Image overlay delete */
+    .img-wrapper { position: relative; overflow: hidden; }
+    .img-wrapper .img-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
+    .img-wrapper:hover .img-overlay { opacity: 1; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f0fdf4; }
+    ::-webkit-scrollbar-thumb { background: #15803d; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 overflow-x-hidden">
+
+<!-- ===================== SECRET ADMIN TAP ZONE (top-left, invisible) ===================== -->
+<div id="secretTapZone" style="position:fixed;top:0;left:0;width:50px;height:50px;z-index:9999;cursor:default;" aria-hidden="true"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo / Brand -->
+      <div class="flex items-center gap-3">
+        <div id="navLogo" class="w-10 h-10 rounded-full overflow-hidden bg-forest-700 flex items-center justify-center">
+          <img id="orgLogoNav" src="" alt="Social Action Uganda Logo" class="w-full h-full object-cover hidden"/>
+          <span id="orgLogoNavFallback" class="text-white font-bold text-sm">SAU</span>
+        </div>
+        <div>
+          <div class="font-bold text-forest-800 text-sm leading-tight">Social Action Uganda</div>
+          <div class="text-xs text-green-600 hidden sm:block">Wakiso District</div>
+        </div>
+      </div>
+
+      <!-- Desktop nav links -->
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#about" class="text-gray-600 hover:text-green-700 transition">About</a>
+        <a href="#programs" class="text-gray-600 hover:text-green-700 transition">Programs</a>
+        <a href="#impact" class="text-gray-600 hover:text-green-700 transition">Impact</a>
+        <a href="#updates" class="text-gray-600 hover:text-green-700 transition">Updates</a>
+        <a href="#contact" class="text-gray-600 hover:text-green-700 transition">Contact</a>
+        <a href="https://buy.stripe.com/8x214o2awd8l8ym7PhfjG00" target="_blank" class="bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-800 transition font-semibold">Donate</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition">
+        <i class="fas fa-bars text-gray-700 text-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-100">
+    <div class="px-4 py-3 space-y-1">
+      <a href="#about" class="block py-2 text-sm text-gray-700 hover:text-green-700 font-medium" onclick="closeMobileMenu()">About</a>
+      <a href="#programs" class="block py-2 text-sm text-gray-700 hover:text-green-700 font-medium" onclick="closeMobileMenu()">Programs</a>
+      <a href="#impact" class="block py-2 text-sm text-gray-700 hover:text-green-700 font-medium" onclick="closeMobileMenu()">Impact</a>
+      <a href="#updates" class="block py-2 text-sm text-gray-700 hover:text-green-700 font-medium" onclick="closeMobileMenu()">Updates</a>
+      <a href="#contact" class="block py-2 text-sm text-gray-700 hover:text-green-700 font-medium" onclick="closeMobileMenu()">Contact</a>
+      <a href="https://buy.stripe.com/8x214o2awd8l8ym7PhfjG00" target="_blank" class="block mt-2 bg-green-700 text-white text-center py-2 rounded-full text-sm font-semibold" onclick="closeMobileMenu()">Donate Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO SECTION ===================== -->
+<section id="hero" class="min-h-screen flex items-center justify-center relative pt-16">
+  <!-- Background: solid forest green with accent -->
+  <div class="absolute inset-0 bg-gradient-to-br from-forest-900 via-forest-800 to-green-800"></div>
+  <!-- Subtle pattern overlay -->
+  <div class="absolute inset-0 opacity-10" style="background-image:url(\" data:image="" svg+xml,%3csvg="" width="60" height="60" viewbox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" %3e%3cg="" fill="none" fill-rule="evenodd" %3e%3cg="" fill="%23ffffff" fill-opacity="0.4" %3e%3ccircle="" cx="30" cy="30" r="2" %3e%3c="" g%3e%3c="" g%3e%3c="" svg%3e\");"=""></div>
+
+  <!-- Hero slideshow bg -->
+  <div id="heroBgSlideshow" class="absolute inset-0 z-0"></div>
+
+  <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto py-20">
+    <!-- Org Logo -->
+    <div class="mb-6 flex justify-center">
+      <div id="heroLogoWrap" class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-white/40 shadow-2xl bg-white/10 flex items-center justify-center">
+        <img id="orgLogo" src="" alt="Social Action Uganda" class="w-full h-full object-cover hidden"/>
+        <div id="orgLogoFallback" class="text-center">
+          <div class="text-4xl sm:text-5xl font-black text-white/90">SAU</div>
+          <div class="text-xs text-white/60 mt-1">Est. 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inline-block bg-white/15 backdrop-blur-sm text-white/90 text-xs font-semibold px-4 py-1.5 rounded-full mb-4 border border-white/20 tracking-wider uppercase">
+      Wakiso District, Uganda · Reg. No: WCBO/24/4122
+    </div>
+
+    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-4">
+      <span id="heroTitle">Social Action Uganda</span>
+    </h1>
+
+    <p id="heroSubtitle" class="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto mb-8 leading-relaxed">
+      Supporting Vulnerable Communities in Wakiso District
+    </p>
+
+    <p id="heroDesc" class="text-sm sm:text-base text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
+      We work with communities, families, local leaders, faith institutions, and young people to prevent child marriage, protect vulnerable children, promote human rights, support vulnerable people through charity, and strengthen communities through awareness and emergency response.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#donate" class="bg-gold-500 hover:bg-gold-600 text-white px-8 py-3.5 rounded-full font-bold text-base transition shadow-lg hover:shadow-xl">
+        <i class="fas fa-heart mr-2"></i>Support Our Work
+      </a>
+      <a href="#about" class="border-2 border-white/60 hover:border-white text-white hover:bg-white/10 px-8 py-3.5 rounded-full font-semibold text-base transition">
+        Learn More <i class="fas fa-arrow-down ml-2"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+    <i class="fas fa-chevron-down text-xl"></i>
+  </div>
+</section>
+
+<!-- ===================== ABOUT US ===================== -->
+<section id="about" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">About Us</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-4">Who We Are</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto">A community-based organization committed to dignity, safety, and fair opportunities for all.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- About images slideshow -->
+      <div class="reveal">
+        <div id="aboutSlideshow" class="slideshow-container rounded-2xl overflow-hidden bg-gray-100 aspect-video shadow-xl">
+          <div id="aboutSlidesContainer">
+            <div class="slide active">
+              <div class="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center aspect-video">
+                <div class="text-center text-green-700">
+                  <i class="fas fa-image text-5xl mb-3 opacity-40"></i>
+                  <p class="text-sm font-medium opacity-60">Photos will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="aboutDots" class="slide-dots absolute bottom-2 left-0 right-0"></div>
+        </div>
+      </div>
+
+      <!-- About text -->
+      <div class="reveal space-y-5">
+        <p id="aboutText1" class="text-gray-700 leading-relaxed">
+          Social Action Uganda is a community-based organization operating in Wakiso District to support vulnerable people through child protection, human rights advocacy, charity activities, and community empowerment.
+        </p>
+        <p id="aboutText2" class="text-gray-700 leading-relaxed">
+          We believe every person deserves dignity, safety, and fair opportunities. Through community engagement and local partnerships, we work to create lasting impact in education, livelihoods, and social protection.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+          <div class="bg-green-50 rounded-xl p-4 text-center border border-green-100">
+            <div class="text-2xl font-bold text-green-700">2024</div>
+            <div class="text-xs text-gray-500 mt-1">Operating Since</div>
+          </div>
+          <div class="bg-green-50 rounded-xl p-4 text-center border border-green-100">
+            <div class="text-2xl font-bold text-green-700">Wakiso</div>
+            <div class="text-xs text-gray-500 mt-1">District, Uganda</div>
+          </div>
+          <div class="bg-green-50 rounded-xl p-4 text-center border border-green-100">
+            <div class="text-xs font-bold text-green-700 leading-tight">WCBO/24/4122</div>
+            <div class="text-xs text-gray-500 mt-1">Reg. Number</div>
+          </div>
+        </div>
+
+        <blockquote id="aboutQuote" class="border-l-4 border-green-500 pl-4 italic text-gray-600">
+          &#34;Our work is guided by a commitment to dignity, fairness, and creating safer, more equitable communities for all.&#34;
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- About photo gallery -->
+    <div class="mt-12 reveal">
+      <h3 class="text-xl font-bold text-forest-800 mb-4">Gallery</h3>
+      <div id="aboutGallery" class="photo-grid cols-3 sm:grid-cols-4 md:grid-cols-6 rounded-xl overflow-hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEADERSHIP ===================== -->
+<section id="leadership" class="py-20 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Who We Are</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-4">Our Leadership</h2>
+      <p class="text-gray-500 max-w-xl mx-auto">Dedicated leaders driving community change in Wakiso District.</p>
+    </div>
+
+    <div id="leadershipGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Default leaders rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROGRAMS / WHAT WE DO ===================== -->
+<section id="programs" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">What We Do</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-4">Our Focus Areas</h2>
+      <p id="programsIntro" class="text-gray-500 max-w-2xl mx-auto">Supporting vulnerable people in Wakiso District through practical community-led solutions.</p>
+    </div>
+
+    <div id="programsGrid" class="grid sm:grid-cols-2 gap-8">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== END CHILD MARRIAGE ===================== -->
+<section id="childMarriage" class="py-20 bg-gradient-to-br from-forest-800 to-forest-900 text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="inline-block bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">Our Mission</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-6">End Child Marriage</h2>
+        <p id="childMarriageText" class="text-white/85 leading-relaxed mb-6">
+          Child marriage denies young people their rights and futures. We work to protect and empower girls and boys through education, awareness campaigns, and community engagement that create lasting change in Wakiso District.
+        </p>
+        <a href="#donate" class="inline-block bg-gold-500 hover:bg-gold-600 text-white px-7 py-3 rounded-full font-bold transition">
+          <i class="fas fa-hand-holding-heart mr-2"></i>Support This Cause
+        </a>
+      </div>
+
+      <div class="reveal">
+        <div id="childMarriageSlideshow" class="slideshow-container rounded-2xl overflow-hidden bg-white/10 aspect-video shadow-2xl relative">
+          <div id="childMarriageSlidesContainer">
+            <div class="slide active">
+              <div class="w-full aspect-video flex items-center justify-center bg-white/5">
+                <div class="text-center text-white/60">
+                  <i class="fas fa-image text-5xl mb-3"></i>
+                  <p class="text-sm">Campaign photos will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="childMarriageDots" class="slide-dots absolute bottom-2 left-0 right-0"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EMERGENCY / COMMUNITY SUPPORT ===================== -->
+<section id="emergency" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal order-2 md:order-1">
+        <div id="emergencySlideshow" class="slideshow-container rounded-2xl overflow-hidden bg-gray-100 aspect-video shadow-xl relative">
+          <div id="emergencySlidesContainer">
+            <div class="slide active">
+              <div class="w-full aspect-video flex items-center justify-center bg-green-50">
+                <div class="text-center text-green-700/50">
+                  <i class="fas fa-image text-5xl mb-3"></i>
+                  <p class="text-sm">Relief photos will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="emergencyDots" class="slide-dots absolute bottom-2 left-0 right-0"></div>
+        </div>
+      </div>
+
+      <div class="reveal order-1 md:order-2">
+        <span class="inline-block bg-orange-100 text-orange-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">Emergency &amp; Relief</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-6">Community &amp; Emergency Support</h2>
+        <p id="emergencyText" class="text-gray-700 leading-relaxed">
+          We provide charity and humanitarian support to vulnerable communities in times of need. We distribute food, clothing, and essential supplies to families affected by disaster and hardship.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HUMAN RIGHTS ===================== -->
+<section id="humanRights" class="py-20 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">Advocacy</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-6">Human Rights Advocacy</h2>
+        <p id="humanRightsText" class="text-gray-700 leading-relaxed">
+          We advocate for the protection of human rights and dignity for all community members in Wakiso District. Through legal connections, awareness campaigns, and direct intervention, we support survivors and promote access to justice for vulnerable people.
+        </p>
+      </div>
+
+      <div class="reveal">
+        <div id="humanRightsSlideshow" class="slideshow-container rounded-2xl overflow-hidden bg-gray-100 aspect-video shadow-xl relative">
+          <div id="humanRightsSlidesContainer">
+            <div class="slide active">
+              <div class="w-full aspect-video flex items-center justify-center bg-blue-50">
+                <div class="text-center text-blue-700/50">
+                  <i class="fas fa-image text-5xl mb-3"></i>
+                  <p class="text-sm">Advocacy photos will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="humanRightsDots" class="slide-dots absolute bottom-2 left-0 right-0"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== IMPACT NUMBERS ===================== -->
+<section id="impact" class="py-20 bg-forest-800 text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Our Impact</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold">Making Real Difference</h2>
+    </div>
+
+    <div id="impactGrid" class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      <div class="text-center reveal">
+        <div class="counter-num text-gold-400 font-black">5,000+</div>
+        <div class="text-white/70 text-sm mt-1">Families Supported</div>
+      </div>
+      <div class="text-center reveal">
+        <div class="counter-num text-gold-400 font-black">120+</div>
+        <div class="text-white/70 text-sm mt-1">Active Volunteers</div>
+      </div>
+      <div class="text-center reveal">
+        <div class="counter-num text-gold-400 font-black">4</div>
+        <div class="text-white/70 text-sm mt-1">Community Programs</div>
+      </div>
+      <div class="text-center reveal">
+        <div class="counter-num text-gold-400 font-black">2</div>
+        <div class="text-white/70 text-sm mt-1">Years of Service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMMUNITY UPDATES ===================== -->
+<section id="updates" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Community Work</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-4">Updates &amp; Stories</h2>
+      <p class="text-gray-500">Updates on community programs and community impact work.</p>
+    </div>
+
+    <!-- Updates gallery -->
+    <div class="mb-12 reveal">
+      <div id="updatesSlideshow" class="slideshow-container rounded-2xl overflow-hidden bg-gray-100 relative" style="max-height: 400px;">
+        <div id="updatesSlidesContainer">
+          <div class="slide active">
+            <div class="w-full flex items-center justify-center bg-green-50" style="height:300px">
+              <div class="text-center text-green-700/50">
+                <i class="fas fa-image text-5xl mb-3"></i>
+                <p class="text-sm">Community photos will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="updatesDots" class="slide-dots absolute bottom-2 left-0 right-0"></div>
+      </div>
+    </div>
+
+    <!-- Updates list -->
+    <div id="updatesContainer" class="space-y-8">
+      <!-- Default updates rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DONATE ===================== -->
+<section id="donate" class="py-20 bg-gradient-to-br from-green-50 to-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <div class="reveal">
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Support Our Work</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-forest-800 mb-4">Your Donation Creates Impact</h2>
+      <p id="donateIntro" class="text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+        Every donation goes directly to supporting vulnerable communities in Wakiso District. We maintain full transparency about how funds are used.
+      </p>
+    </div>
+
+    <!-- How donations are used -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-12 reveal">
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-green-100 donate-card">
+        <div class="text-3xl mb-2">🎓</div>
+        <div class="text-2xl font-bold text-green-700">40%</div>
+        <div class="text-xs text-gray-500 mt-1">Child protection &amp; education support</div>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-green-100 donate-card">
+        <div class="text-3xl mb-2">🍲</div>
+        <div class="text-2xl font-bold text-green-700">30%</div>
+        <div class="text-xs text-gray-500 mt-1">Emergency relief &amp; community support</div>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-green-100 donate-card">
+        <div class="text-3xl mb-2">👩</div>
+        <div class="text-2xl font-bold text-green-700">20%</div>
+        <div class="text-xs text-gray-500 mt-1">Women empowerment &amp; training</div>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border border-green-100 donate-card">
+        <div class="text-3xl mb-2">⚙️</div>
+        <div class="text-2xl font-bold text-green-700">10%</div>
+        <div class="text-xs text-gray-500 mt-1">Operations &amp; coordination</div>
+      </div>
+    </div>
+
+    <!-- Donation cause selector -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 reveal border border-green-100">
+      <h3 class="font-bold text-forest-800 text-lg mb-4">Choose What to Support</h3>
+      <div class="grid sm:grid-cols-2 gap-3 mb-6" id="donationCauses">
+        <label class="flex items-center gap-3 p-3 border-2 border-green-200 rounded-xl cursor-pointer hover:border-green-500 transition has-[:checked]:border-green-600 has-[:checked]:bg-green-50">
+          <input type="radio" name="cause" value="child_protection" class="accent-green-700" checked=""/>
+          <span class="text-sm font-medium text-gray-700">🎓 Child Protection &amp; Education</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 border-2 border-green-200 rounded-xl cursor-pointer hover:border-green-500 transition has-[:checked]:border-green-600 has-[:checked]:bg-green-50">
+          <input type="radio" name="cause" value="emergency" class="accent-green-700"/>
+          <span class="text-sm font-medium text-gray-700">🍲 Emergency Relief</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 border-2 border-green-200 rounded-xl cursor-pointer hover:border-green-500 transition has-[:checked]:border-green-600 has-[:checked]:bg-green-50">
+          <input type="radio" name="cause" value="women" class="accent-green-700"/>
+          <span class="text-sm font-medium text-gray-700">👩 Women Empowerment</span>
+        </label>
+        <label class="flex items-center gap-3 p-3 border-2 border-green-200 rounded-xl cursor-pointer hover:border-green-500 transition has-[:checked]:border-green-600 has-[:checked]:bg-green-50">
+          <input type="radio" name="cause" value="general" class="accent-green-700"/>
+          <span class="text-sm font-medium text-gray-700">💚 General Community Support</span>
+        </label>
+      </div>
+      <a href="https://buy.stripe.com/8x214o2awd8l8ym7PhfjG00" target="_blank" id="donateStripeBtn" class="block w-full bg-green-700 hover:bg-green-800 text-white text-center py-4 rounded-xl font-bold text-base transition shadow-lg hover:shadow-xl">
+        <i class="fas fa-credit-card mr-2"></i>Donate via Stripe
+      </a>
+    </div>
+
+    <!-- Partner / Volunteer -->
+    <div class="reveal">
+      <a href="#contact" class="inline-flex items-center gap-2 border-2 border-forest-700 text-forest-700 hover:bg-forest-700 hover:text-white px-8 py-3.5 rounded-full font-bold transition">
+        <i class="fas fa-hands-helping"></i>Partner With Us — Volunteer
+      </a>
+      <p class="text-xs text-gray-400 mt-4">All donations are used directly for community work and program delivery in Wakiso District.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="py-20 bg-forest-800 text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12 reveal">
+      <span class="inline-block bg-white/20 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">Get In Touch</span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold">Contact Social Action Uganda</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="reveal space-y-6">
+        <!-- Address -->
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-map-marker-alt text-gold-400"></i>
+          </div>
+          <div>
+            <div class="font-semibold mb-1">Physical Address</div>
+            <div class="text-white/70">Wakiso District, Central Region, Uganda</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-envelope text-gold-400"></i>
+          </div>
+          <div>
+            <div class="font-semibold mb-1">Email</div>
+            <a href="mailto:socialaction976@gmail.com" class="text-white/70 hover:text-white transition block">socialaction976@gmail.com</a>
+            <a href="mailto:alosiouslubinga@gmail.com" class="text-white/70 hover:text-white transition block text-sm mt-1">
+              <span class="text-white/40">Chairperson:</span> alosiouslubinga@gmail.com
+            </a>
+            <a href="mailto:Kilumiladavis@gmail.com" class="text-white/70 hover:text-white transition block text-sm mt-1">
+              <span class="text-white/40">Vice Chairperson:</span> Kilumiladavis@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-phone text-gold-400"></i>
+          </div>
+          <div>
+            <div class="font-semibold mb-1">Phone / WhatsApp</div>
+            <a href="tel:+256780420041" class="text-white/70 hover:text-white transition block">+256 780 420 041</a>
+            <a href="https://wa.me/256780420041" target="_blank" class="inline-flex items-center gap-2 mt-2 bg-green-600 hover:bg-green-500 px-4 py-2 rounded-full text-sm font-semibold transition">
+              <i class="fab fa-whatsapp text-lg"></i>Message on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-share-alt text-gold-400"></i>
+          </div>
+          <div>
+            <div class="font-semibold mb-3">Follow Us</div>
+            <div class="flex flex-wrap gap-3" id="socialLinksContainer">
+              <a href="https://www.facebook.com/share/193rt7qxuX/" target="_blank" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-sm font-semibold transition">
+                <i class="fab fa-facebook-f"></i>Facebook
+              </a>
+              <a href="https://x.com/SOCIALACT8" target="_blank" class="flex items-center gap-2 bg-black hover:bg-gray-900 px-4 py-2 rounded-full text-sm font-semibold transition">
+                <i class="fab fa-x-twitter"></i>X (Twitter)
+              </a>
+              <a href="https://www.linkedin.com/in/social-action-717517335?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" class="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-full text-sm font-semibold transition">
+                <i class="fab fa-linkedin-in"></i>LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick contact form visual -->
+      <div class="reveal bg-white/5 rounded-2xl p-6 border border-white/10">
+        <h3 class="font-bold text-lg mb-4">Send Us a Message</h3>
+        <form id="contactForm" class="space-y-4" onsubmit="submitContactForm(event)">
+          <input type="text" placeholder="Your Name" required="" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-green-400 text-sm"/>
+          <input type="email" placeholder="Your Email" required="" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-green-400 text-sm"/>
+          <textarea rows="4" placeholder="Your Message" required="" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-green-400 text-sm resize-none"></textarea>
+          <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white py-3 rounded-xl font-bold transition">
+            Send Message <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRIVACY POLICY ===================== -->
+<section id="privacy" class="py-12 bg-gray-50">
+  <div class="max-w-3xl mx-auto px-4">
+    <h3 class="font-serif text-xl font-bold text-forest-800 mb-4">Privacy Policy</h3>
+    <p class="text-gray-600 text-sm leading-relaxed mb-3">We respect your privacy. Any personal information you share will only be used to communicate with you and support our work.</p>
+    <p class="text-gray-600 text-sm leading-relaxed mb-3">We do not sell, trade, or share your information with third parties. We take reasonable steps to protect your data.</p>
+    <p class="text-gray-600 text-sm leading-relaxed">If you contact us, your information will only be used to respond to your inquiry.</p>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="bg-forest-900 text-white py-10">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <div class="font-serif text-2xl font-bold mb-2">Social Action Uganda</div>
+    <p class="text-white/50 text-sm mb-4">Child protection, human rights, and community support in Wakiso District since 2024.</p>
+    <p class="text-white/40 text-xs mb-6">Registration No: WCBO/24/4122</p>
+
+    <div class="flex justify-center gap-4 mb-6">
+      <a href="https://www.facebook.com/share/193rt7qxuX/" target="_blank" class="w-9 h-9 bg-white/10 hover:bg-blue-600 rounded-full flex items-center justify-center transition">
+        <i class="fab fa-facebook-f text-sm"></i>
+      </a>
+      <a href="https://x.com/SOCIALACT8" target="_blank" class="w-9 h-9 bg-white/10 hover:bg-gray-700 rounded-full flex items-center justify-center transition">
+        <i class="fab fa-x-twitter text-sm"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/social-action-717517335?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" class="w-9 h-9 bg-white/10 hover:bg-blue-700 rounded-full flex items-center justify-center transition">
+        <i class="fab fa-linkedin-in text-sm"></i>
+      </a>
+      <a href="https://wa.me/256780420041" target="_blank" class="w-9 h-9 bg-white/10 hover:bg-green-600 rounded-full flex items-center justify-center transition">
+        <i class="fab fa-whatsapp text-sm"></i>
+      </a>
+      <a href="mailto:socialaction976@gmail.com" class="w-9 h-9 bg-white/10 hover:bg-red-600 rounded-full flex items-center justify-center transition">
+        <i class="fas fa-envelope text-sm"></i>
+      </a>
+    </div>
+
+    <p class="text-white/30 text-xs">© 2024 Social Action Uganda. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ===================== ADMIN LOGIN MODAL ===================== -->
+<div id="adminLoginModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 hidden">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeAdminLogin()"></div>
+  <div class="relative bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm z-10">
+    <button onclick="closeAdminLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+      <i class="fas fa-times text-xl"></i>
+    </button>
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-forest-800 rounded-full flex items-center justify-center mx-auto mb-3">
+        <i class="fas fa-shield-alt text-white text-2xl"></i>
+      </div>
+      <h2 class="font-bold text-xl text-gray-800">Admin Login</h2>
+      <p class="text-gray-500 text-sm mt-1">Social Action Uganda</p>
+    </div>
+
+    <div id="loginError" class="hidden bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4 border border-red-100"></div>
+
+    <form onsubmit="loginWithEmail(event)" class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Email</label>
+        <input id="loginEmail" type="email" value="socialaction80@gmail.com" required="" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-green-500 mt-1"/>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Password</label>
+        <div class="relative mt-1">
+          <input id="loginPassword" type="password" required="" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-green-500 pr-10"/>
+          <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+            <i id="pwEyeIcon" class="fas fa-eye text-sm"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" id="loginBtn" class="w-full bg-forest-800 hover:bg-forest-900 text-white py-3 rounded-xl font-bold text-sm transition flex items-center justify-center gap-2">
+        <i class="fas fa-lock"></i>Login to Admin Panel
+      </button>
+    </form>
+
+    <div class="flex items-center gap-3 my-4">
+      <div class="flex-1 h-px bg-gray-200"></div>
+      <span class="text-xs text-gray-400">or</span>
+      <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
+
+    <button onclick="loginWithGoogle()" id="googleLoginBtn" class="w-full border-2 border-gray-200 hover:border-gray-300 text-gray-700 py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-3">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google"/>
+      Sign in with Google
+    </button>
+  </div>
+</div>
+
+<!-- ===================== ADMIN PANEL ===================== -->
+<div id="adminPanel" class="fixed inset-0 z-[90] flex-col bg-white overflow-hidden">
+  <!-- Admin Header -->
+  <div class="bg-forest-800 text-white px-4 py-3 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <i class="fas fa-shield-alt text-gold-400"></i>
+      <span class="font-bold">Admin Panel — Social Action Uganda</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="adminUserEmail" class="text-white/60 text-xs hidden sm:block"></span>
+      <button onclick="logoutAdmin()" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+      </button>
+      <button onclick="closeAdminPanel()" class="bg-white/10 hover:bg-red-500/50 w-8 h-8 rounded-lg flex items-center justify-center transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Admin tabs -->
+  <div class="bg-forest-900 text-white/70 flex gap-1 px-4 py-2 overflow-x-auto flex-shrink-0 text-xs">
+    <button onclick="switchAdminTab(&#39;content&#39;)" id="tab-content" class="admin-tab active px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Content</button>
+    <button onclick="switchAdminTab(&#39;logo&#39;)" id="tab-logo" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Logo</button>
+    <button onclick="switchAdminTab(&#39;about&#39;)" id="tab-about" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">About Photos</button>
+    <button onclick="switchAdminTab(&#39;leadership&#39;)" id="tab-leadership" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Leadership</button>
+    <button onclick="switchAdminTab(&#39;programs&#39;)" id="tab-programs" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Programs</button>
+    <button onclick="switchAdminTab(&#39;galleries&#39;)" id="tab-galleries" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Galleries</button>
+    <button onclick="switchAdminTab(&#39;updates&#39;)" id="tab-updates" class="admin-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition">Updates</button>
+  </div>
+
+  <!-- Admin Content Area -->
+  <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50">
+
+    <!-- ---- CONTENT TAB ---- -->
+    <div id="adminTab-content" class="admin-tab-content space-y-6">
+      <h3 class="font-bold text-lg text-gray-800">Edit Website Content</h3>
+
+      <!-- Hero -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 flex items-center gap-2"><i class="fas fa-home text-green-600"></i>Hero Section</h4>
+        <div class="space-y-3">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Subtitle</label>
+            <input id="edit-heroSubtitle" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Description</label>
+            <textarea id="edit-heroDesc" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+        </div>
+        <button onclick="saveContent(&#39;hero&#39;)" class="mt-3 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save Hero</button>
+      </div>
+
+      <!-- About -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 flex items-center gap-2"><i class="fas fa-info-circle text-green-600"></i>About Us</h4>
+        <div class="space-y-3">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Paragraph 1</label>
+            <textarea id="edit-aboutText1" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Paragraph 2</label>
+            <textarea id="edit-aboutText2" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Quote</label>
+            <textarea id="edit-aboutQuote" rows="2" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+        </div>
+        <button onclick="saveContent(&#39;about&#39;)" class="mt-3 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save About</button>
+      </div>
+
+      <!-- Section texts -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 flex items-center gap-2"><i class="fas fa-edit text-green-600"></i>Section Descriptions</h4>
+        <div class="space-y-4">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">End Child Marriage Text</label>
+            <textarea id="edit-childMarriageText" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Emergency Support Text</label>
+            <textarea id="edit-emergencyText" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Human Rights Text</label>
+            <textarea id="edit-humanRightsText" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Donate Intro Text</label>
+            <textarea id="edit-donateIntro" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+        </div>
+        <button onclick="saveContent(&#39;sections&#39;)" class="mt-3 bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save Sections</button>
+      </div>
+    </div>
+
+    <!-- ---- LOGO TAB ---- -->
+    <div id="adminTab-logo" class="admin-tab-content hidden space-y-6">
+      <h3 class="font-bold text-lg text-gray-800">Organization Logo / Profile Picture</h3>
+      <div class="bg-white rounded-xl p-6 shadow-sm border">
+        <div class="flex flex-col items-center gap-6">
+          <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-green-200 bg-green-50 flex items-center justify-center">
+            <img id="adminLogoPreview" src="" alt="" class="w-full h-full object-cover hidden"/>
+            <i id="adminLogoFallback" class="fas fa-building text-green-300 text-4xl"></i>
+          </div>
+          <div class="w-full">
+            <p class="text-sm text-gray-500 mb-4 text-center">Upload your organization logo or profile picture. This will appear across the website.</p>
+            <label class="upload-zone rounded-xl p-6 text-center cursor-pointer block">
+              <i class="fas fa-cloud-upload-alt text-green-500 text-3xl mb-2 block"></i>
+              <span class="text-sm font-semibold text-green-700">Click to Upload Logo</span>
+              <span class="text-xs text-gray-400 block mt-1">JPG, PNG, WebP — Max 2MB</span>
+              <input type="file" accept="image/*" class="hidden" onchange="uploadLogo(this)"/>
+            </label>
+          </div>
+          <button onclick="deleteLogo()" class="text-red-500 hover:text-red-700 text-sm font-semibold flex items-center gap-1">
+            <i class="fas fa-trash-alt"></i>Remove Logo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- ABOUT PHOTOS TAB ---- -->
+    <div id="adminTab-about" class="admin-tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-lg text-gray-800">About Us Photos</h3>
+        <span class="text-xs text-gray-400">Unlimited photos</span>
+      </div>
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <label class="upload-zone rounded-xl p-6 text-center cursor-pointer block mb-4">
+          <i class="fas fa-cloud-upload-alt text-green-500 text-3xl mb-2 block"></i>
+          <span class="text-sm font-semibold text-green-700">Upload About Photos</span>
+          <span class="text-xs text-gray-400 block mt-1">JPG · 1200×800px · Max 300KB each · Multiple allowed</span>
+          <input type="file" accept="image/*" multiple="" class="hidden" onchange="uploadSectionPhotos(this,&#39;about&#39;)"/>
+        </label>
+        <div id="adminAboutPhotos" class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
+      </div>
+    </div>
+
+    <!-- ---- LEADERSHIP TAB ---- -->
+    <div id="adminTab-leadership" class="admin-tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-lg text-gray-800">Leadership Team</h3>
+        <button onclick="addLeaderForm()" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+          <i class="fas fa-plus mr-1"></i>Add Member
+        </button>
+      </div>
+
+      <div id="adminLeadershipList" class="space-y-3"></div>
+
+      <!-- Add/Edit Leader Form -->
+      <div id="leaderFormWrap" class="hidden bg-white rounded-xl p-5 shadow-sm border">
+        <h4 id="leaderFormTitle" class="font-semibold text-gray-700 mb-4">Add Leader</h4>
+        <input type="hidden" id="editLeaderId" value=""/>
+        <div class="space-y-3">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Name</label>
+            <input id="leaderName" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Role / Title</label>
+            <input id="leaderRole" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase block mb-1">Photo (800×800px, JPG, under 200KB)</label>
+            <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block">
+              <i class="fas fa-user-circle text-green-500 text-2xl mb-1 block"></i>
+              <span class="text-xs text-green-700 font-medium">Upload photo</span>
+              <input type="file" accept="image/*" class="hidden" onchange="previewLeaderPhoto(this)" id="leaderPhotoInput"/>
+            </label>
+            <img id="leaderPhotoPreview" src="" alt="" class="hidden w-24 h-24 rounded-full object-cover mt-2 mx-auto border-2 border-green-200"/>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-4">
+          <button onclick="saveLeader()" class="bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save</button>
+          <button onclick="cancelLeaderForm()" class="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 transition">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- PROGRAMS TAB ---- -->
+    <div id="adminTab-programs" class="admin-tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-lg text-gray-800">Focus Area Programs</h3>
+        <button onclick="addProgramForm()" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+          <i class="fas fa-plus mr-1"></i>Add Program
+        </button>
+      </div>
+
+      <div id="adminProgramsList" class="space-y-3"></div>
+
+      <div id="programFormWrap" class="hidden bg-white rounded-xl p-5 shadow-sm border">
+        <h4 id="programFormTitle" class="font-semibold text-gray-700 mb-4">Add Program</h4>
+        <input type="hidden" id="editProgramId" value=""/>
+        <div class="space-y-3">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Title</label>
+            <input id="programTitle" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Icon (Font Awesome class, e.g. fa-heart)</label>
+            <input id="programIcon" type="text" placeholder="fa-heart" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Description</label>
+            <textarea id="programDesc" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+          <div>
+            <label class="text-xs font-semibold text-gray-500 uppercase block mb-1">Photos (1200×800px, JPG, under 300KB)</label>
+            <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block">
+              <i class="fas fa-images text-green-500 text-2xl mb-1 block"></i>
+              <span class="text-xs text-green-700 font-medium">Upload photos (unlimited)</span>
+              <input type="file" accept="image/*" multiple="" class="hidden" id="programPhotoInput"/>
+            </label>
+            <div id="programPhotoPreviews" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-4">
+          <button onclick="saveProgram()" class="bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save</button>
+          <button onclick="cancelProgramForm()" class="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 transition">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- GALLERIES TAB ---- -->
+    <div id="adminTab-galleries" class="admin-tab-content hidden space-y-6">
+      <h3 class="font-bold text-lg text-gray-800">Section Photo Galleries</h3>
+      <p class="text-sm text-gray-500">Upload photos for each section. Unlimited photos per section. 1200×800px, JPG, under 300KB.</p>
+
+      <!-- Child Marriage -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 text-sm">End Child Marriage Gallery</h4>
+        <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block mb-3">
+          <span class="text-xs text-green-700 font-medium"><i class="fas fa-upload mr-1"></i>Upload Photos (Unlimited)</span>
+          <input type="file" accept="image/*" multiple="" class="hidden" onchange="uploadSectionPhotos(this,&#39;childMarriage&#39;)"/>
+        </label>
+        <div id="adminChildMarriagePhotos" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
+      </div>
+
+      <!-- Emergency -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 text-sm">Emergency Support Gallery</h4>
+        <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block mb-3">
+          <span class="text-xs text-green-700 font-medium"><i class="fas fa-upload mr-1"></i>Upload Photos (Unlimited)</span>
+          <input type="file" accept="image/*" multiple="" class="hidden" onchange="uploadSectionPhotos(this,&#39;emergency&#39;)"/>
+        </label>
+        <div id="adminEmergencyPhotos" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
+      </div>
+
+      <!-- Human Rights -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 text-sm">Human Rights Gallery</h4>
+        <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block mb-3">
+          <span class="text-xs text-green-700 font-medium"><i class="fas fa-upload mr-1"></i>Upload Photos (Unlimited)</span>
+          <input type="file" accept="image/*" multiple="" class="hidden" onchange="uploadSectionPhotos(this,&#39;humanRights&#39;)"/>
+        </label>
+        <div id="adminHumanRightsPhotos" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
+      </div>
+
+      <!-- Updates gallery -->
+      <div class="bg-white rounded-xl p-5 shadow-sm border">
+        <h4 class="font-semibold text-gray-700 mb-3 text-sm">Community Updates Gallery</h4>
+        <label class="upload-zone rounded-lg p-4 text-center cursor-pointer block mb-3">
+          <span class="text-xs text-green-700 font-medium"><i class="fas fa-upload mr-1"></i>Upload Photos (Unlimited)</span>
+          <input type="file" accept="image/*" multiple="" class="hidden" onchange="uploadSectionPhotos(this,&#39;updates&#39;)"/>
+        </label>
+        <div id="adminUpdatesPhotos" class="grid grid-cols-3 sm:grid-cols-5 gap-2"></div>
+      </div>
+    </div>
+
+    <!-- ---- UPDATES TAB ---- -->
+    <div id="adminTab-updates" class="admin-tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-lg text-gray-800">Community Updates</h3>
+        <button onclick="addUpdateForm()" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+          <i class="fas fa-plus mr-1"></i>Add Update
+        </button>
+      </div>
+
+      <div id="adminUpdatesList" class="space-y-3"></div>
+
+      <div id="updateFormWrap" class="hidden bg-white rounded-xl p-5 shadow-sm border">
+        <h4 id="updateFormTitle" class="font-semibold text-gray-700 mb-4">Add Update</h4>
+        <input type="hidden" id="editUpdateId" value=""/>
+        <div class="space-y-3">
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Date / Period</label>
+            <input id="updateDate" type="text" placeholder="e.g. May 2024" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Title</label>
+            <input id="updateTitle" type="text" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500"/></div>
+          <div><label class="text-xs font-semibold text-gray-500 uppercase">Content</label>
+            <textarea id="updateContent" rows="4" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:border-green-500 resize-none"></textarea></div>
+        </div>
+        <div class="flex gap-3 mt-4">
+          <button onclick="saveUpdate()" class="bg-green-700 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">Save</button>
+          <button onclick="cancelUpdateForm()" class="bg-gray-100 text-gray-600 px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 transition">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== ADMIN TOAST ===================== -->
+<div id="adminToast" class="fixed bottom-6 right-4 z-[200] bg-green-700 text-white px-5 py-3 rounded-xl shadow-xl font-semibold text-sm opacity-0 pointer-events-none transform translate-y-4 flex items-center gap-2">
+  <i class="fas fa-check-circle"></i>
+  <span id="adminToastMsg">Saved!</span>
+</div>
+
+<!-- ===================== UPLOAD PROGRESS OVERLAY ===================== -->
+<div id="uploadOverlay" class="fixed inset-0 z-[300] bg-black/50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-2xl p-8 flex flex-col items-center gap-4">
+    <div class="spinner"></div>
+    <p class="text-gray-700 font-semibold text-sm" id="uploadProgressText">Uploading...</p>
+  </div>
+</div>
+
+<!-- ===================== FIREBASE &amp; APP SCRIPTS ===================== -->
+<script>
+// ===== FIREBASE CONFIG =====
+const firebaseConfig = {
+  apiKey: "AIzaSyB4ZMc6x_rKdBcwWXUuM8PgokAMmG5rSaM",
+  authDomain: "social-action-uganda.firebaseapp.com",
+  projectId: "social-action-uganda",
+  storageBucket: "social-action-uganda.firebasestorage.app",
+  messagingSenderId: "5069903707",
+  appId: "1:5069903707:web:01c40bfc594801e333ac7e"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+const storage = firebase.storage();
+
+// ===== GLOBAL STATE =====
+let currentUser = null;
+let isAdmin = false;
+let tapCount = 0;
+let tapTimer = null;
+let sectionSlideIndices = {};
+
+// ===== DEFAULT DATA =====
+const defaultLeaders = [
+  { id: 'leader1', name: 'Alosiuous Lubinga', role: 'Chairperson', photoURL: '' },
+  { id: 'leader2', name: 'Kilumila Davis', role: 'Vice Chairperson', photoURL: '' },
+  { id: 'leader3', name: '6+ Active Members', role: 'Community Members', photoURL: '' }
+];
+
+const defaultPrograms = [
+  { id: 'prog1', title: 'Women Empowerment', icon: 'fa-venus', desc: 'We support women through awareness programs, skills development, and advocacy for their rights.' },
+  { id: 'prog2', title: 'Youth Empowerment', icon: 'fa-user-graduate', desc: 'We equip young people with knowledge, guidance, and opportunities to build a better future.' },
+  { id: 'prog3', title: 'Human Rights Awareness', icon: 'fa-balance-scale', desc: 'We educate communities about their rights and promote equality and justice.' },
+  { id: 'prog4', title: 'Community Support', icon: 'fa-hands-helping', desc: 'We work directly with vulnerable families to improve living conditions and wellbeing.' }
+];
+
+const defaultUpdates = [
+  {
+    id: 'upd1', date: 'May 2024',
+    title: 'Emergency Relief Support for Families in Need',
+    content: 'Our team delivered food, clothing, and essential supplies to 200+ families in Wakiso District affected by natural disaster, including orphaned children and vulnerable households.'
+  },
+  {
+    id: 'upd2', date: 'April 2024 – Present',
+    title: 'Child Marriage Awareness Campaign Reaches Schools',
+    content: 'Working with schools, faith institutions, and community leaders, we reached 500+ students with education-focused campaigns and connected at-risk girls to counseling and support services.'
+  },
+  {
+    id: 'upd3', date: 'March 2024',
+    title: 'Human Rights Support in Wakiso',
+    content: 'In 2024, we supported 2 survivors: connected a rape survivor to FIDA legal aid for justice, and helped a man beaten and robbed of his work tools secure funds to replace them.'
+  }
+];
+
+// ===== DOM READY =====
+document.addEventListener('DOMContentLoaded', () => {
+  setupSecretTap();
+  setupMobileMenu();
+  setupScrollReveal();
+  loadAllContent();
+  setupAuthListener();
+  setupAutoSlideshow();
+});
+
+// ===== AUTH LISTENER =====
+function setupAuthListener() {
+  auth.onAuthStateChanged(user => {
+    currentUser = user;
+    if (user) {
+      isAdmin = true;
+      document.getElementById('adminUserEmail').textContent = user.email || user.displayName || '';
+    } else {
+      isAdmin = false;
+    }
+  });
+}
+
+// ===== SECRET TAP ZONE =====
+function setupSecretTap() {
+  const zone = document.getElementById('secretTapZone');
+  zone.addEventListener('click', () => {
+    tapCount++;
+    if (tapTimer) clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { tapCount = 0; }, 3000);
+    if (tapCount >= 5) {
+      tapCount = 0;
+      clearTimeout(tapTimer);
+      if (isAdmin) {
+        openAdminPanel();
+      } else {
+        openAdminLogin();
+      }
+    }
+  });
+}
+
+// ===== MOBILE MENU =====
+function setupMobileMenu() {
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ===== ADMIN LOGIN =====
+function openAdminLogin() {
+  document.getElementById('adminLoginModal').classList.remove('hidden');
+}
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').classList.add('hidden');
+  document.getElementById('loginError').classList.add('hidden');
+}
+function togglePasswordVisibility() {
+  const pw = document.getElementById('loginPassword');
+  const icon = document.getElementById('pwEyeIcon');
+  if (pw.type === 'password') {
+    pw.type = 'text';
+    icon.className = 'fas fa-eye-slash text-sm';
+  } else {
+    pw.type = 'password';
+    icon.className = 'fas fa-eye text-sm';
+  }
+}
+
+async function loginWithEmail(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  const errDiv = document.getElementById('loginError');
+
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  btn.disabled = true;
+  errDiv.classList.add('hidden');
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    isAdmin = true;
+    closeAdminLogin();
+    openAdminPanel();
+    showToast('Welcome, Admin!');
+  } catch (err) {
+    errDiv.textContent = err.message || 'Login failed. Check credentials.';
+    errDiv.classList.remove('hidden');
+  }
+  btn.innerHTML = '<i class="fas fa-lock"></i>Login to Admin Panel';
+  btn.disabled = false;
+}
+
+async function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  const btn = document.getElementById('googleLoginBtn');
+  btn.innerHTML = '<div class="spinner mx-auto"></div>';
+  btn.disabled = true;
+  try {
+    await auth.signInWithPopup(provider);
+    isAdmin = true;
+    closeAdminLogin();
+    openAdminPanel();
+    showToast('Welcome, Admin!');
+  } catch(err) {
+    document.getElementById('loginError').textContent = err.message;
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+  btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="Google" />Sign in with Google';
+  btn.disabled = false;
+}
+
+function logoutAdmin() {
+  auth.signOut();
+  closeAdminPanel();
+  showToast('Logged out successfully.');
+}
+
+// ===== ADMIN PANEL =====
+function openAdminPanel() {
+  document.getElementById('adminPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  loadAdminData();
+}
+function closeAdminPanel() {
+  document.getElementById('adminPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function switchAdminTab(tab) {
+  document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('adminTab-' + tab).classList.remove('hidden');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ===== LOAD ALL PUBLIC CONTENT =====
+async function loadAllContent() {
+  // Load text content
+  const contentSnap = await db.ref('content').once('value');
+  const content = contentSnap.val() || {};
+  applyContent(content);
+
+  // Load logo
+  const logoSnap = await db.ref('orgLogo').once('value');
+  const logoURL = logoSnap.val();
+  if (logoURL) applyLogo(logoURL);
+
+  // Load leadership
+  const leadersSnap = await db.ref('leaders').once('value');
+  const leadersData = leadersSnap.val();
+  renderLeadership(leadersData ? Object.values(leadersData) : defaultLeaders);
+
+  // Load programs
+  const programsSnap = await db.ref('programs').once('value');
+  const programsData = programsSnap.val();
+  renderPrograms(programsData ? Object.values(programsData) : defaultPrograms);
+
+  // Load updates
+  const updatesSnap = await db.ref('updates').once('value');
+  const updatesData = updatesSnap.val();
+  renderUpdates(updatesData ? Object.values(updatesData) : defaultUpdates);
+
+  // Load section photos
+  loadSectionPhotos('about', 'aboutSlidesContainer', 'aboutDots', 'aboutGallery');
+  loadSectionPhotos('childMarriage', 'childMarriageSlidesContainer', 'childMarriageDots');
+  loadSectionPhotos('emergency', 'emergencySlidesContainer', 'emergencyDots');
+  loadSectionPhotos('humanRights', 'humanRightsSlidesContainer', 'humanRightsDots');
+  loadSectionPhotos('updates', 'updatesSlidesContainer', 'updatesDots');
+}
+
+function applyContent(content) {
+  const fields = ['heroSubtitle','heroDesc','aboutText1','aboutText2','aboutQuote','childMarriageText','emergencyText','humanRightsText','donateIntro','programsIntro'];
+  fields.forEach(f => {
+    if (content[f]) {
+      const el = document.getElementById(f);
+      if (el) el.textContent = content[f];
+    }
+  });
+}
+
+function applyLogo(url) {
+  ['orgLogo','orgLogoNav'].forEach(id => {
+    const img = document.getElementById(id);
+    if (img) { img.src = url; img.classList.remove('hidden'); }
+  });
+  ['orgLogoFallback','orgLogoNavFallback'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+  const adminPrev = document.getElementById('adminLogoPreview');
+  if (adminPrev) { adminPrev.src = url; adminPrev.classList.remove('hidden'); }
+  const adminFall = document.getElementById('adminLogoFallback');
+  if (adminFall) adminFall.classList.add('hidden');
+}
+
+// ===== LOAD SECTION PHOTOS =====
+async function loadSectionPhotos(section, slidesContainerId, dotsId, galleryId) {
+  const snap = await db.ref('photos/' + section).once('value');
+  const data = snap.val();
+  if (!data) return;
+  const photos = Object.entries(data).map(([k, v]) => ({ key: k, ...v }));
+  if (!photos.length) return;
+
+  const slidesContainer = document.getElementById(slidesContainerId);
+  const dotsContainer = document.getElementById(dotsId);
+  if (!slidesContainer) return;
+
+  // Clear placeholder
+  slidesContainer.innerHTML = '';
+  if (dotsContainer) dotsContainer.innerHTML = '';
+
+  photos.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i === 0 ? ' active' : '');
+    slide.innerHTML = `<img src="${p.url}" alt="${p.alt || section + ' photo'}" loading="lazy" class="w-full object-cover" style="max-height:400px;" />`;
+    slidesContainer.appendChild(slide);
+
+    if (dotsContainer) {
+      const dot = document.createElement('div');
+      dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goToSlide(slidesContainerId, dotsId, i);
+      dotsContainer.appendChild(dot);
+    }
+  });
+
+  // Gallery grid (for about)
+  if (galleryId) {
+    const gallery = document.getElementById(galleryId);
+    if (gallery) {
+      gallery.innerHTML = '';
+      photos.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'aspect-square overflow-hidden rounded-lg';
+        div.innerHTML = `<img src="${p.url}" alt="${p.alt||''}" loading="lazy" class="w-full h-full object-cover hover:scale-105 transition duration-300" />`;
+        gallery.appendChild(div);
+      });
+    }
+  }
+
+  startSlideshow(slidesContainerId, dotsId);
+}
+
+// ===== SLIDESHOW ENGINE =====
+const slideshowIntervals = {};
+function startSlideshow(containerId, dotsId) {
+  if (slideshowIntervals[containerId]) clearInterval(slideshowIntervals[containerId]);
+  slideshowIntervals[containerId] = setInterval(() => advanceSlide(containerId, dotsId), 4000);
+}
+
+function advanceSlide(containerId, dotsId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const slides = container.querySelectorAll('.slide');
+  if (slides.length <= 1) return;
+  let current = -1;
+  slides.forEach((s, i) => { if (s.classList.contains('active')) current = i; });
+  const next = (current + 1) % slides.length;
+  goToSlide(containerId, dotsId, next);
+}
+
+function goToSlide(containerId, dotsId, index) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const slides = container.querySelectorAll('.slide');
+  slides.forEach((s, i) => s.classList.toggle('active', i === index));
+  if (dotsId) {
+    const dotsContainer = document.getElementById(dotsId);
+    if (dotsContainer) {
+      dotsContainer.querySelectorAll('.slide-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+  }
+}
+
+function setupAutoSlideshow() {
+  // Will be started after photos load
+}
+
+// ===== RENDER LEADERSHIP =====
+function renderLeadership(leaders) {
+  const grid = document.getElementById('leadershipGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  leaders.forEach(l => {
+    const div = document.createElement('div');
+    div.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 text-center p-5 reveal';
+    div.innerHTML = `
+      <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-3 bg-green-100 border-2 border-green-200 flex items-center justify-center">
+        ${l.photoURL ? `<img src="${l.photoURL}" alt="${l.name}" loading="lazy" class="w-full h-full object-cover" />` : `<i class="fas fa-user text-green-400 text-2xl"></i>`}
+      </div>
+      <h4 class="font-bold text-gray-800 text-sm">${l.name}</h4>
+      <p class="text-green-600 text-xs mt-1 font-medium">${l.role}</p>
+    `;
+    grid.appendChild(div);
+  });
+  setupScrollReveal();
+}
+
+// ===== RENDER PROGRAMS =====
+function renderPrograms(programs) {
+  const grid = document.getElementById('programsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  programs.forEach((p, i) => {
+    const colors = ['bg-green-50 border-green-100','bg-blue-50 border-blue-100','bg-purple-50 border-purple-100','bg-orange-50 border-orange-100'];
+    const iconColors = ['text-green-600','text-blue-600','text-purple-600','text-orange-600'];
+    const colorIdx = i % 4;
+    const div = document.createElement('div');
+    div.className = `rounded-2xl p-6 border ${colors[colorIdx]} reveal`;
+    div.innerHTML = `
+      <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center mb-4">
+        <i class="fas ${p.icon || 'fa-star'} ${iconColors[colorIdx]} text-xl"></i>
+      </div>
+      <h3 class="font-bold text-gray-800 text-base mb-2">${p.title}</h3>
+      <p class="text-gray-600 text-sm leading-relaxed">${p.desc}</p>
+      ${p.photos && Object.keys(p.photos).length > 0 ? `
+        <div class="mt-4 grid grid-cols-3 gap-1 rounded-xl overflow-hidden">
+          ${Object.values(p.photos).slice(0,3).map(ph => `<img src="${ph.url}" alt="${p.title}" loading="lazy" class="w-full aspect-square object-cover" />`).join('')}
+        </div>` : ''}
+    `;
+    grid.appendChild(div);
+  });
+  setupScrollReveal();
+}
+
+// ===== RENDER UPDATES =====
+function renderUpdates(updates) {
+  const container = document.getElementById('updatesContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  updates.forEach(u => {
+    const div = document.createElement('div');
+    div.className = 'border-l-4 border-green-500 pl-6 pb-6 reveal';
+    div.innerHTML = `
+      <span class="inline-block bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full mb-2">${u.date}</span>
+      <h3 class="font-bold text-gray-800 text-lg mb-2">${u.title}</h3>
+      <p class="text-gray-600 leading-relaxed text-sm">${u.content}</p>
+    `;
+    container.appendChild(div);
+  });
+  setupScrollReveal();
+}
+
+// ===== SCROLL REVEAL =====
+function setupScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (!el.classList.contains('visible')) observer.observe(el);
+  });
+}
+
+// ===== CONTACT FORM =====
+function submitContactForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form[0].value,
+    email: form[1].value,
+    message: form[2].value,
+    timestamp: Date.now()
+  };
+  db.ref('messages').push(data);
+  form.reset();
+  showToast('Message sent! We will be in touch.');
+}
+
+// ===== ADMIN DATA LOAD =====
+function loadAdminData() {
+  // Fill content fields
+  db.ref('content').once('value').then(snap => {
+    const c = snap.val() || {};
+    const mapping = {
+      'heroSubtitle':'edit-heroSubtitle','heroDesc':'edit-heroDesc',
+      'aboutText1':'edit-aboutText1','aboutText2':'edit-aboutText2','aboutQuote':'edit-aboutQuote',
+      'childMarriageText':'edit-childMarriageText','emergencyText':'edit-emergencyText',
+      'humanRightsText':'edit-humanRightsText','donateIntro':'edit-donateIntro'
+    };
+    Object.entries(mapping).forEach(([key, editId]) => {
+      const el = document.getElementById(editId);
+      if (el) el.value = c[key] || document.getElementById(key)?.textContent || '';
+    });
+  });
+
+  // Logo preview
+  db.ref('orgLogo').once('value').then(snap => {
+    const url = snap.val();
+    if (url) {
+      const prev = document.getElementById('adminLogoPreview');
+      if (prev) { prev.src = url; prev.classList.remove('hidden'); }
+      const fall = document.getElementById('adminLogoFallback');
+      if (fall) fall.classList.add('hidden');
+    }
+  });
+
+  loadAdminLeaders();
+  loadAdminPrograms();
+  loadAdminUpdates();
+  loadAdminGalleries();
+}
+
+// ===== SAVE CONTENT =====
+async function saveContent(section) {
+  const updates = {};
+  if (section === 'hero') {
+    updates.heroSubtitle = document.getElementById('edit-heroSubtitle').value;
+    updates.heroDesc = document.getElementById('edit-heroDesc').value;
+  } else if (section === 'about') {
+    updates.aboutText1 = document.getElementById('edit-aboutText1').value;
+    updates.aboutText2 = document.getElementById('edit-aboutText2').value;
+    updates.aboutQuote = document.getElementById('edit-aboutQuote').value;
+  } else if (section === 'sections') {
+    updates.childMarriageText = document.getElementById('edit-childMarriageText').value;
+    updates.emergencyText = document.getElementById('edit-emergencyText').value;
+    updates.humanRightsText = document.getElementById('edit-humanRightsText').value;
+    updates.donateIntro = document.getElementById('edit-donateIntro').value;
+  }
+  await db.ref('content').update(updates);
+  applyContent({ ...updates });
+  showToast('Content saved!');
+}
+
+// ===== UPLOAD LOGO =====
+async function uploadLogo(input) {
+  if (!input.files.length) return;
+  const file = input.files[0];
+  showUploadOverlay('Uploading logo...');
+  try {
+    const ref = storage.ref('logo/' + Date.now() + '_' + file.name);
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+    await db.ref('orgLogo').set(url);
+    applyLogo(url);
+    showToast('Logo updated!');
+  } catch(e) { showToast('Upload failed: ' + e.message); }
+  hideUploadOverlay();
+}
+
+async function deleteLogo() {
+  await db.ref('orgLogo').remove();
+  ['orgLogo','orgLogoNav'].forEach(id => {
+    const img = document.getElementById(id);
+    if (img) { img.src=''; img.classList.add('hidden'); }
+  });
+  ['orgLogoFallback','orgLogoNavFallback'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('hidden');
+  });
+  const prev = document.getElementById('adminLogoPreview');
+  if (prev) { prev.src=''; prev.classList.add('hidden'); }
+  const fall = document.getElementById('adminLogoFallback');
+  if (fall) fall.classList.remove('hidden');
+  showToast('Logo removed.');
+}
+
+// ===== UPLOAD SECTION PHOTOS =====
+async function uploadSectionPhotos(input, section) {
+  if (!input.files.length) return;
+  const files = Array.from(input.files);
+  showUploadOverlay(`Uploading ${files.length} photo(s)...`);
+  for (let i = 0; i < files.length; i++) {
+    document.getElementById('uploadProgressText').textContent = `Uploading ${i+1} of ${files.length}...`;
+    try {
+      const file = files[i];
+      const ref = storage.ref(`photos/${section}/${Date.now()}_${file.name}`);
+      await ref.put(file);
+      const url = await ref.getDownloadURL();
+      await db.ref(`photos/${section}`).push({ url, alt: section + ' photo', timestamp: Date.now() });
+    } catch(e) { console.error(e); }
+  }
+  hideUploadOverlay();
+  showToast(`Photos uploaded!`);
+  // Reload
+  loadSectionPhotos(section, section+'SlidesContainer', section+'Dots', section==='about'?'aboutGallery':null);
+  if (section === 'about') loadAdminPhotosForSection(section, 'adminAboutPhotos');
+  if (section === 'childMarriage') loadAdminPhotosForSection(section, 'adminChildMarriagePhotos');
+  if (section === 'emergency') loadAdminPhotosForSection(section, 'adminEmergencyPhotos');
+  if (section === 'humanRights') loadAdminPhotosForSection(section, 'adminHumanRightsPhotos');
+  if (section === 'updates') loadAdminPhotosForSection(section, 'adminUpdatesPhotos');
+}
+
+// ===== ADMIN GALLERIES =====
+function loadAdminGalleries() {
+  loadAdminPhotosForSection('about', 'adminAboutPhotos');
+  loadAdminPhotosForSection('childMarriage', 'adminChildMarriagePhotos');
+  loadAdminPhotosForSection('emergency', 'adminEmergencyPhotos');
+  loadAdminPhotosForSection('humanRights', 'adminHumanRightsPhotos');
+  loadAdminPhotosForSection('updates', 'adminUpdatesPhotos');
+}
+
+async function loadAdminPhotosForSection(section, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  const snap = await db.ref('photos/' + section).once('value');
+  const data = snap.val();
+  if (!data) return;
+  Object.entries(data).forEach(([key, photo]) => {
+    const div = document.createElement('div');
+    div.className = 'img-wrapper aspect-square rounded-lg overflow-hidden';
+    div.innerHTML = `
+      <img src="${photo.url}" alt="" loading="lazy" class="w-full h-full object-cover" />
+      <div class="img-overlay">
+        <button onclick="deletePhoto('${section}','${key}')" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full">
+          <i class="fas fa-trash-alt text-sm"></i>
+        </button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+async function deletePhoto(section, key) {
+  await db.ref(`photos/${section}/${key}`).remove();
+  showToast('Photo deleted.');
+  loadAdminPhotosForSection(section, 'admin' + section.charAt(0).toUpperCase() + section.slice(1) + 'Photos');
+  loadSectionPhotos(section, section+'SlidesContainer', section+'Dots', section==='about'?'aboutGallery':null);
+}
+
+// ===== LEADERSHIP ADMIN =====
+async function loadAdminLeaders() {
+  const list = document.getElementById('adminLeadershipList');
+  if (!list) return;
+  list.innerHTML = '';
+  const snap = await db.ref('leaders').once('value');
+  const data = snap.val();
+  const leaders = data ? Object.entries(data).map(([k,v]) => ({id:k,...v})) : defaultLeaders;
+  leaders.forEach(l => {
+    const div = document.createElement('div');
+    div.className = 'bg-white rounded-xl p-4 border flex items-center gap-3';
+    div.innerHTML = `
+      <div class="w-12 h-12 rounded-full overflow-hidden bg-green-100 flex items-center justify-center flex-shrink-0">
+        ${l.photoURL ? `<img src="${l.photoURL}" alt="${l.name}" class="w-full h-full object-cover" />` : `<i class="fas fa-user text-green-400"></i>`}
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm text-gray-800">${l.name}</div>
+        <div class="text-xs text-green-600">${l.role}</div>
+      </div>
+      <button onclick="editLeaderForm('${l.id}','${encodeURIComponent(l.name)}','${encodeURIComponent(l.role)}','${l.photoURL||''}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fas fa-edit"></i></button>
+      <button onclick="deleteLeader('${l.id}')" class="text-red-400 hover:text-red-600 p-2"><i class="fas fa-trash-alt"></i></button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function addLeaderForm() {
+  document.getElementById('leaderFormWrap').classList.remove('hidden');
+  document.getElementById('leaderFormTitle').textContent = 'Add Leader';
+  document.getElementById('editLeaderId').value = '';
+  document.getElementById('leaderName').value = '';
+  document.getElementById('leaderRole').value = '';
+  document.getElementById('leaderPhotoPreview').classList.add('hidden');
+}
+
+function editLeaderForm(id, name, role, photoURL) {
+  document.getElementById('leaderFormWrap').classList.remove('hidden');
+  document.getElementById('leaderFormTitle').textContent = 'Edit Leader';
+  document.getElementById('editLeaderId').value = id;
+  document.getElementById('leaderName').value = decodeURIComponent(name);
+  document.getElementById('leaderRole').value = decodeURIComponent(role);
+  if (photoURL) {
+    const prev = document.getElementById('leaderPhotoPreview');
+    prev.src = photoURL; prev.classList.remove('hidden');
+  }
+}
+
+function cancelLeaderForm() {
+  document.getElementById('leaderFormWrap').classList.add('hidden');
+}
+
+let leaderPhotoFile = null;
+function previewLeaderPhoto(input) {
+  if (!input.files.length) return;
+  leaderPhotoFile = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('leaderPhotoPreview');
+    prev.src = e.target.result; prev.classList.remove('hidden');
+  };
+  reader.readAsDataURL(leaderPhotoFile);
+}
+
+async function saveLeader() {
+  const id = document.getElementById('editLeaderId').value;
+  const name = document.getElementById('leaderName').value.trim();
+  const role = document.getElementById('leaderRole').value.trim();
+  if (!name || !role) { showToast('Name and role are required.'); return; }
+
+  let photoURL = '';
+  if (id) {
+    const snap = await db.ref('leaders/' + id).once('value');
+    photoURL = (snap.val() || {}).photoURL || '';
+  }
+
+  if (leaderPhotoFile) {
+    showUploadOverlay('Uploading photo...');
+    const ref = storage.ref(`leaders/${Date.now()}_${leaderPhotoFile.name}`);
+    await ref.put(leaderPhotoFile);
+    photoURL = await ref.getDownloadURL();
+    hideUploadOverlay();
+    leaderPhotoFile = null;
+  }
+
+  const leaderData = { name, role, photoURL };
+  if (id && id !== '') {
+    await db.ref('leaders/' + id).set(leaderData);
+  } else {
+    await db.ref('leaders').push(leaderData);
+  }
+  cancelLeaderForm();
+  showToast('Leader saved!');
+  loadAdminLeaders();
+  const snap = await db.ref('leaders').once('value');
+  const data = snap.val();
+  renderLeadership(data ? Object.values(data) : defaultLeaders);
+}
+
+async function deleteLeader(id) {
+  await db.ref('leaders/' + id).remove();
+  showToast('Leader removed.');
+  loadAdminLeaders();
+  const snap = await db.ref('leaders').once('value');
+  const data = snap.val();
+  renderLeadership(data ? Object.values(data) : defaultLeaders);
+}
+
+// ===== PROGRAMS ADMIN =====
+async function loadAdminPrograms() {
+  const list = document.getElementById('adminProgramsList');
+  if (!list) return;
+  list.innerHTML = '';
+  const snap = await db.ref('programs').once('value');
+  const data = snap.val();
+  const programs = data ? Object.entries(data).map(([k,v]) => ({id:k,...v})) : defaultPrograms;
+  programs.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'bg-white rounded-xl p-4 border flex items-center gap-3';
+    div.innerHTML = `
+      <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <i class="fas ${p.icon||'fa-star'} text-green-600"></i>
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm text-gray-800">${p.title}</div>
+        <div class="text-xs text-gray-400 truncate">${p.desc}</div>
+      </div>
+      <button onclick="editProgramForm('${p.id}','${encodeURIComponent(p.title)}','${p.icon||'fa-star'}','${encodeURIComponent(p.desc)}')" class="text-blue-500 hover:text-blue-700 p-2"><i class="fas fa-edit"></i></button>
+      <button onclick="deleteProgram('${p.id}')" class="text-red-400 hover:text-red-600 p-2"><i class="fas fa-trash-alt"></i></button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function addProgramForm() {
+  document.getElementById('programFormWrap').classList.remove('hidden');
+  document.getElementById('programFormTitle').textContent = 'Add Program';
+  document.getElementById('editProgramId').value = '';
+  document.getElementById('programTitle').value = '';
+  document.getElementById('programIcon').value = '';
+  document.getElementById('programDesc').value = '';
+  document.getElementById('programPhotoPreviews').innerHTML = '';
+}
+
+function editProgramForm(id, title, icon, desc) {
+  document.getElementById('programFormWrap').classList.remove('hidden');
+  document.getElementById('programFormTitle').textContent = 'Edit Program';
+  document.getElementById('editProgramId').value = id;
+  document.getElementById('programTitle').value = decodeURIComponent(title);
+  document.getElementById('programIcon').value = icon;
+  document.getElementById('programDesc').value = decodeURIComponent(desc);
+}
+
+function cancelProgramForm() {
+  document.getElementById('programFormWrap').classList.add('hidden');
+}
+
+async function saveProgram() {
+  const id = document.getElementById('editProgramId').value;
+  const title = document.getElementById('programTitle').value.trim();
+  const icon = document.getElementById('programIcon').value.trim() || 'fa-star';
+  const desc = document.getElementById('programDesc').value.trim();
+  if (!title || !desc) { showToast('Title and description required.'); return; }
+
+  let photos = {};
+  if (id) {
+    const snap = await db.ref('programs/' + id).once('value');
+    photos = (snap.val() || {}).photos || {};
+  }
+
+  const photoInput = document.getElementById('programPhotoInput');
+  if (photoInput.files.length) {
+    showUploadOverlay('Uploading photos...');
+    for (let file of Array.from(photoInput.files)) {
+      const ref = storage.ref(`programPhotos/${Date.now()}_${file.name}`);
+      await ref.put(file);
+      const url = await ref.getDownloadURL();
+      photos[Date.now()] = { url };
+    }
+    hideUploadOverlay();
+  }
+
+  const progData = { title, icon, desc, photos };
+  if (id && id !== '') {
+    await db.ref('programs/' + id).set(progData);
+  } else {
+    await db.ref('programs').push(progData);
+  }
+  cancelProgramForm();
+  showToast('Program saved!');
+  loadAdminPrograms();
+  const snap = await db.ref('programs').once('value');
+  const data = snap.val();
+  renderPrograms(data ? Object.values(data) : defaultPrograms);
+}
+
+async function deleteProgram(id) {
+  await db.ref('programs/' + id).remove();
+  showToast('Program removed.');
+  loadAdminPrograms();
+  const snap = await db.ref('programs').once('value');
+  const data = snap.val();
+  renderPrograms(data ? Object.values(data) : defaultPrograms);
+}
+
+// ===== UPDATES ADMIN =====
+async function loadAdminUpdates() {
+  const list = document.getElementById('adminUpdatesList');
+  if (!list) return;
+  list.innerHTML = '';
+  const snap = await db.ref('updates').once('value');
+  const data = snap.val();
+  const updates = data ? Object.entries(data).map(([k,v]) => ({id:k,...v})) : defaultUpdates;
+  updates.forEach(u => {
+    const div = document.createElement('div');
+    div.className = 'bg-white rounded-xl p-4 border';
+    div.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="flex-1">
+          <div class="text-xs text-green-600 font-bold mb-1">${u.date}</div>
+          <div class="font-semibold text-sm text-gray-800">${u.title}</div>
+          <div class="text-xs text-gray-400 mt-1 line-clamp-2">${u.content}</div>
+        </div>
+        <button onclick="editUpdateForm('${u.id}','${encodeURIComponent(u.date)}','${encodeURIComponent(u.title)}','${encodeURIComponent(u.content)}')" class="text-blue-500 hover:text-blue-700 p-2 flex-shrink-0"><i class="fas fa-edit"></i></button>
+        <button onclick="deleteUpdate('${u.id}')" class="text-red-400 hover:text-red-600 p-2 flex-shrink-0"><i class="fas fa-trash-alt"></i></button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function addUpdateForm() {
+  document.getElementById('updateFormWrap').classList.remove('hidden');
+  document.getElementById('updateFormTitle').textContent = 'Add Update';
+  document.getElementById('editUpdateId').value = '';
+  document.getElementById('updateDate').value = '';
+  document.getElementById('updateTitle').value = '';
+  document.getElementById('updateContent').value = '';
+}
+
+function editUpdateForm(id, date, title, content) {
+  document.getElementById('updateFormWrap').classList.remove('hidden');
+  document.getElementById('updateFormTitle').textContent = 'Edit Update';
+  document.getElementById('editUpdateId').value = id;
+  document.getElementById('updateDate').value = decodeURIComponent(date);
+  document.getElementById('updateTitle').value = decodeURIComponent(title);
+  document.getElementById('updateContent').value = decodeURIComponent(content);
+}
+
+function cancelUpdateForm() {
+  document.getElementById('updateFormWrap').classList.add('hidden');
+}
+
+async function saveUpdate() {
+  const id = document.getElementById('editUpdateId').value;
+  const date = document.getElementById('updateDate').value.trim();
+  const title = document.getElementById('updateTitle').value.trim();
+  const content = document.getElementById('updateContent').value.trim();
+  if (!date || !title || !content) { showToast('All fields required.'); return; }
+
+  const updateData = { date, title, content };
+  if (id && id !== '') {
+    await db.ref('updates/' + id).set(updateData);
+  } else {
+    await db.ref('updates').push(updateData);
+  }
+  cancelUpdateForm();
+  showToast('Update saved!');
+  loadAdminUpdates();
+  const snap = await db.ref('updates').once('value');
+  const data = snap.val();
+  renderUpdates(data ? Object.values(data) : defaultUpdates);
+}
+
+async function deleteUpdate(id) {
+  await db.ref('updates/' + id).remove();
+  showToast('Update removed.');
+  loadAdminUpdates();
+  const snap = await db.ref('updates').once('value');
+  const data = snap.val();
+  renderUpdates(data ? Object.values(data) : defaultUpdates);
+}
+
+// ===== UPLOAD OVERLAY =====
+function showUploadOverlay(msg) {
+  document.getElementById('uploadProgressText').textContent = msg || 'Uploading...';
+  document.getElementById('uploadOverlay').classList.remove('hidden');
+}
+function hideUploadOverlay() {
+  document.getElementById('uploadOverlay').classList.add('hidden');
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const toast = document.getElementById('adminToast');
+  document.getElementById('adminToastMsg').textContent = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+  toast.style.pointerEvents = 'auto';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(16px)';
+    toast.style.pointerEvents = 'none';
+  }, 3000);
+}
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
